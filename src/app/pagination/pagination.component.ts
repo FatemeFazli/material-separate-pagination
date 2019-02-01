@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-pagination',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class PaginationComponent {
   title = 'material-separate-pagination';
+  // MatPaginator Inputs
+  @Input('length') length: number;
+  @Input('pageSize') pageSize: number;
+  @Input('pageSizeOptions') pageSizeOptions: number[];
+
+  @Output('page') page: EventEmitter<PageEvent> = new EventEmitter();
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+  setPage(event) {
+    this.page.emit(event);
+  }
 }
